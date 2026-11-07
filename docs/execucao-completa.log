@@ -1,0 +1,126 @@
+$ git remote add origin https://github.com/Engenharia-de-Software-com-Devops/lab5-tags-releases.git
+
+$ git remote -v
+origin	https://github.com/Engenharia-de-Software-com-Devops/lab5-tags-releases.git (fetch)
+origin	https://github.com/Engenharia-de-Software-com-Devops/lab5-tags-releases.git (push)
+
+$ git push -u origin main
+To https://github.com/Engenharia-de-Software-com-Devops/lab5-tags-releases.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+
+$ git branch -vv
+* main d932135 [origin/main] feat: add professional profile post
+
+$ git clone https://github.com/Engenharia-de-Software-com-Devops/lab5-tags-releases.git blog-clonado
+Cloning into 'blog-clonado'...
+
+$ ls
+archetypes
+content
+hugo.toml
+layouts
+
+$ git branch --all
+* main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/main
+
+$ git tag -a v1.0 -m "Primeira versão publicada do blog"
+
+$ git tag
+v1.0
+
+$ git show v1.0 --stat
+tag v1.0
+Tagger: jaimedsf <jaime.silva.ferreira2@gmail.com>
+Date:   Fri Nov 6 21:05:46 2026 -0300
+
+Primeira versão publicada do blog
+
+commit d932135845267a735b3f4c20c383b6ea66669617
+Author: jaimedsf <jaime.silva.ferreira2@gmail.com>
+Date:   Fri Nov 6 21:05:26 2026 -0300
+
+    feat: add professional profile post
+
+ content/posts/perfil-profissional.md | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+$ git push origin v1.0
+To https://github.com/Engenharia-de-Software-com-Devops/lab5-tags-releases.git
+ * [new tag]         v1.0 -> v1.0
+
+$ git switch -c test-reset
+Switched to a new branch 'test-reset'
+
+$ git add content/posts/hobbies.md
+
+$ git commit -m "feat: adiciona basquete aos hobbies"
+[test-reset 5c66d7f] feat: adiciona basquete aos hobbies
+ 1 file changed, 1 insertion(+)
+
+$ git log --oneline
+5c66d7f feat: adiciona basquete aos hobbies
+d932135 feat: add professional profile post
+4da604b feat: add hobbies post
+95c6fb0 feat: add Hugo blog base with hello-world post
+
+$ git reset --soft HEAD~1
+
+$ git status
+No ramo test-reset
+Mudanças a serem submetidas:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   content/posts/hobbies.md
+
+
+$ git commit -m "feat: adiciona basquete à seção de esportes"
+[test-reset daa99e9] feat: adiciona basquete à seção de esportes
+ 1 file changed, 1 insertion(+)
+
+$ git revert --no-edit HEAD
+[test-reset ddb77f6] Revert "feat: adiciona basquete à seção de esportes"
+ Date: Fri Nov 6 21:05:48 2026 -0300
+ 1 file changed, 1 deletion(-)
+
+$ git log --oneline
+ddb77f6 Revert "feat: adiciona basquete à seção de esportes"
+daa99e9 feat: adiciona basquete à seção de esportes
+d932135 feat: add professional profile post
+4da604b feat: add hobbies post
+95c6fb0 feat: add Hugo blog base with hello-world post
+
+$ git switch main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+$ git branch -d test-reset
+error: the branch 'test-reset' is not fully merged
+hint: If you are sure you want to delete it, run 'git branch -D test-reset'
+hint: Disable this message with "git config set advice.forceDeleteBranch false"
+
+$ git branch -D test-reset
+Deleted branch test-reset (was ddb77f6).
+
+$ git status
+No ramo main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+$ git log --oneline
+d932135 feat: add professional profile post
+4da604b feat: add hobbies post
+95c6fb0 feat: add Hugo blog base with hello-world post
+
+$ git tag
+v1.0
+
+$ git branch
+* main
+
+$ git ls-remote --tags origin
+5d745a2aca67c4f04976f03d3cc3cb6abcd9148d	refs/tags/v1.0
+d932135845267a735b3f4c20c383b6ea66669617	refs/tags/v1.0^{}
+
